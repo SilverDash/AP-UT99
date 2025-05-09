@@ -64,6 +64,7 @@ class ShuffleLadderUnlocks(Choice):
     Display = "Ladder Unlocks as Items"
     option_yes = 1
     option_no = 0
+    default = 0
 
 
 class RandomMapsPerLadder(Choice):
@@ -71,6 +72,7 @@ class RandomMapsPerLadder(Choice):
     display_name = "Randomize Maps Per Ladder"
     option_false = 0
     option_true = 1
+    default = 0
 
 
 class VaryRandomMapNumber(Toggle):
@@ -83,11 +85,17 @@ class ExtraLadders(Toggle):
     display_name="Add Extra Ladders"
 
 
+class AddTDM(Toggle):
+    """Enable to add Team Death Match to the ladder"""
+    display_name = "Add Team DeathMatch"
+
+
 class ExtraLaddersNumber(Range):
     """How many extra ladders to add. This will only work if you have more than the vanilla Gamemodes"""
     display_name="Extra Ladder Count"
     range_start = 0
     range_end = 3
+    default = 0
 
 
 class MapsPerLadderRangeMax(Range):
@@ -97,6 +105,7 @@ class MapsPerLadderRangeMax(Range):
     Display = "Maps to add to each Ladder"
     range_start = 7
     range_end = 32
+    default = 7
 
 
 class RandomItemsPerMap(Range):
@@ -105,6 +114,7 @@ class RandomItemsPerMap(Range):
     Display = "Items per map"
     range_start = 3
     range_end = 6
+    default = 3
 
 
 class MapsPerAS(Range):
@@ -114,6 +124,7 @@ class MapsPerAS(Range):
     Display = "Maps The AS ladder Will Have"
     range_start = 6
     range_end = 20
+    default = 6
 
 
 class MapsPerDM(Range):
@@ -123,6 +134,7 @@ class MapsPerDM(Range):
     Display = "Maps The AS ladder Will Have"
     range_start = 14
     range_end = 20
+    default = 14
 
 
 class MapsPerTDM(Range):
@@ -132,6 +144,7 @@ class MapsPerTDM(Range):
     Display = "Maps The TDM ladder Will Have"
     range_start = 14
     range_end = 20
+    default = 14
 
 
 class MapsPerCTF(Range):
@@ -141,6 +154,7 @@ class MapsPerCTF(Range):
     Display = "Maps The CTF ladder Will Have"
     range_start = 10
     range_end = 20
+    default = 10
 
 
 class MapsPerDOM(Range):
@@ -150,6 +164,7 @@ class MapsPerDOM(Range):
     Display = "Maps The DOM ladder Will Have"
     range_start = 9
     range_end = 20
+    default = 9
 
 
 class MapsPerEX(Range):
@@ -159,6 +174,7 @@ class MapsPerEX(Range):
     Display = "Maps The EX ladder Will Have(If enabled)"
     range_start = 7
     range_end = 20
+    default = 7
 
 
 class MapsPerEX2(Range):
@@ -168,6 +184,7 @@ class MapsPerEX2(Range):
     Display = "Maps The EX3 ladder Will Have(If enabled)"
     range_start = 7
     range_end = 20
+    default = 7
 
 
 class MapsPerEX3(Range):
@@ -177,6 +194,7 @@ class MapsPerEX3(Range):
     Display = "Maps The EX3 ladder Will Have(If enabled)"
     range_start = 7
     range_end = 20
+    default = 7
 
 
 class CustomMapRanges(Toggle):
@@ -210,6 +228,7 @@ class UTOptions(PerGameCommonOptions):
     MapsPerEX:MapsPerEX
     MapsPerEX2:MapsPerEX2
     MapsPerEX3:MapsPerEX3
+    AddTDM:AddTDM
 
 
 
@@ -219,8 +238,8 @@ class UTOptions(PerGameCommonOptions):
 ut99_option_groups: Dict[str, List[Any]] = {
     "General Options":[EndGoal, ShuffleLadderUnlocks],
 
-    "LadderOptions":[RandomMapsPerLadder,ExtraLadders,ExtraLaddersNumber,StartingLadder,LadderRandomizer],
-    "Map Options": [MapsPerLadderRangeMax, CustomMapRanges,VaryRandomMapNumber,MapsPerAS,MapsPerDM,MapsPerDOM,MapsPerCTF,MapsPerCTF,MapsPerEX,MapsPerEX2,MapsPerEX3],
+    "LadderOptions":[AddTDM, RandomMapsPerLadder,ExtraLadders,ExtraLaddersNumber,StartingLadder,LadderRandomizer],
+    "Map Options": [MapsPerLadderRangeMax, CustomMapRanges,VaryRandomMapNumber,MapsPerAS,MapsPerDM,MapsPerDOM,MapsPerCTF,MapsPerTDM,MapsPerEX,MapsPerEX2,MapsPerEX3],
     "Item Options": [ProgressiveBotUpgrades,ProgressiveArmor,ProgressiveWeapons,RandomItemsPerMap]
 
 }

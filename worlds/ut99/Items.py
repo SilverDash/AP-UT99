@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 ladder_items:Dict[str, ItemData] ={
     "AS-Ladder":ItemData(1,ItemClassification.progression),
     "DM-Ladder":ItemData(2,ItemClassification.progression),
-    "TDM-Ladder":ItemData(3,ItemClassification.progression),
+
     "CTF-Ladder":ItemData(4,ItemClassification.progression_skip_balancing),
     "DOM-Ladder":ItemData(5,ItemClassification.progression_skip_balancing),
     "Challange-Ladder":ItemData(6,ItemClassification.progression_skip_balancing)
@@ -63,6 +63,8 @@ def create_all_items(world: "UT99World") -> None:
 
     if world.options.ShuffleLadderUnlocks:
         itempool += ladder_items
+        if world.options.AddTDM:
+            itempool += {"TDM-Ladder":ItemData(3,ItemClassification.progression)}
 
     if world.options.prog_armor:
         itempool += create_progressives(3,"Progressive-Armor")

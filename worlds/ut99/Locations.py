@@ -8,13 +8,15 @@ if TYPE_CHECKING:
 Ladder_Completions={
     "Ladder Completion (AS)":LocData(3000,"AS",required_ladderItem=["AS-Ladder"]),
     "Ladder Completion (DM)":LocData(3001,"DM",required_ladderItem=["DM-Ladder"]),
-    "Ladder Completion (TDM)":LocData(3002,"TDM",required_ladderItem=["TDM-Ladder"]),
     "Ladder Completion (CTF)":LocData(3003,"CTF",required_ladderItem=["CTF-Ladder"]),
     "Ladder Completion (DOM)":LocData(3004,"DOM",required_ladderItem=["DOM-Ladder"]),
+}
+Ladder_Completion_TDM={"Ladder Completion (TDM)":LocData(3002,"TDM",required_ladderItem=["TDM-Ladder"])}
+
+Ladder_Completions_EX={
     "Ladder Completion (EX)":LocData(3005,"EX",required_ladderItem=["EX-Ladder"]),
     "Ladder Completion (EX2)":LocData(3006,"EX2",required_ladderItem=["EX2-Ladder"]),
-    "Ladder Completion (EX3)":LocData(3007,"EX3",required_ladderItem=["EX3-Ladder"])
-}
+    "Ladder Completion (EX3)":LocData(3007,"EX3",required_ladderItem=["EX3-Ladder"])}
 
 DM_maps={
           "DM Map 1 Completion" :LocData(3202, "DM"),

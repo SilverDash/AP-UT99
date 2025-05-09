@@ -1,9 +1,10 @@
-from BaseClasses import Item, ItemClassification, Tutorial, Location, MultiWorld
+from BaseClasses import Item, Tutorial, MultiWorld
 from worlds.AutoWorld import WebWorld, World
 from typing import Dict, Any
-from . import Events, Items, Locations, Regions, Rules
+from . import Items, Locations, Regions, Rules
 from .Items import item_table, create_item
-from .Options import UTOptions
+from .Options import UTOptions, RandomItemsPerMap,ExtraLadders,CustomMapRanges,ExtraLaddersNumber,VaryRandomMapNumber,MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
+
 from .Locations import location_table ,Ladder_Completions
 from worlds.LauncherComponents import Component, components, icon_paths, launch as launch_component, Type
 from Utils import local_path
@@ -49,22 +50,32 @@ class UT99World(World):
     location_name_to_id = Locations.get_loc_names()
 
     web = UT99Web()
-
+    # and there was a better way. Thanks medic
     def __init__(self, multiworld: "MultiWorld", player: int):
         super().__init__(multiworld, player)
+        self.TDMRange = range(MapsPerTDM.default)
+        self.DMRange = range(MapsPerDM.default)
+        self.ASRange = range(MapsPerAS.default)
+        self.DOMRange = range(MapsPerDOM.default)
+        self.CTFRange = range(MapsPerCTF.default)
+        self.EXRange = range(MapsPerEX.default)
+        self.EX2Range = range(MapsPerEX2.default)
+        self.EX3Range = range(MapsPerEX3.default)
 
 
     def generate_early(self):
-        Regions.set_mapranges()
         if not self.multiworld.get_player_name(self.player).isascii():
             raise Exception("UT99 yaml's slot name has invalid character(s).")
+        Regions.set_mapranges(self)
 
     def create_regions(self):
-        Regions.create_regions(self)
+        Regions.create_all_regions_and_connections(self)
         if not self.options.ShuffleLadderUnlocks:
-            for name in Ladder_Completions.keys():
-                loc = self.get_location(name)
-                loc.place_locked_item(create_item(self, name))
+            for loc_name, loc_data in Ladder_Completions.items():
+                loc = self.get_location(loc_name)
+                for item_name in loc_data.required_ladderItem:
+                    item = create_item(self, item_name)
+                    loc.place_locked_item(item)
 
     def create_items(self):
         Items.create_all_items(self)
