@@ -1,7 +1,7 @@
 import collections
 
 from BaseClasses import Region, Entrance, ItemClassification, Location, LocationProgressType
-from .Locations import location_table, Ladder_Completion_TDM, Ladder_Completions_EX, Ladder_Completions
+from .Locations import location_table, Ladder_Completion_TDM, Ladder_Completions_EX, Ladder_Completions,Map_locations
 from typing import TYPE_CHECKING, List, Dict
 from .Options import MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 import random
@@ -12,9 +12,7 @@ if TYPE_CHECKING:
     from . import UT99World
 
 
-#Setting up the iterables for the globals. probably a better way to do this.....there was
-
-limit = 999999
+# Setting up the iterables for the globals. probably a better way to do this.....there was
 
 
 UT_EX_region_Connections:Dict[str,List[str]] = {
@@ -22,12 +20,11 @@ UT_EX_region_Connections:Dict[str,List[str]] = {
     "EX2":["EX2 1"],
     "EX3":["EX3 1"],}
 
+
 def set_mapranges(world: "UT99World"):
-    global limit
-    limit = world.options.RandomItemsPerMap.value
     """Initialize the random ranges the map count rando will use.
     Uses random.randrange and user options settings
-    Globals are used to allow the varables be used in other parts of this module."""
+    """
     #Random full
     if world.options.VaryRandomMapNumber:
         world.TDMRange = range(MapsPerTDM.range_start,random.randrange(MapsPerTDM.range_start,21))
@@ -107,23 +104,17 @@ UT_region_connections: Dict[str, List[str]] = {
     "Challenge":   ["Challenge 1"],
     "Challenge 1": ["Challenge 2"],
     "Challenge 2": ["Challenge 3"],
-    "Challenge 3": ["Challenge 3"]
+    "Challenge 3": ["Victory"],
+    "Victory":[]
 }
 
 
-
-locID_list=[]
-
-# limitless by default and should never cause an error
 def create_region(world: "UT99World", name: str) -> Region:
     reg = Region(name, world.player, world.multiworld)
-    #world.multiworld.regions.append(reg)
     return reg
 
 
-
 def create_regions(world: "UT99World") -> Dict[str, Region]:
-
     # Add extra ladder regions if enabled
     if world.options.ExtraLadders:
         UT_region_connections.setdefault("LadderScreen", []).extend(["EX", "EX2", "EX3"])
@@ -138,31 +129,46 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
         UT_region_connections.update(create_TDMregion_connections(world))
 
     # Create each region once and append
-    created_regions: List[Region] = []
+    created_regions: Dict[str, Region] = {}
     for region_name in UT_region_connections:
         region = create_region(world, region_name)
-        created_regions.append(region)
+        created_regions[region_name] = region
 
-    # Attach map locations up to the item-per-map limit
+
+    # Attach map locations
     for key, data in location_table.items():
-        for region in created_regions:
+        for name, region in created_regions.items():
             if data.region == region.name:
-                if limit is not None and len(region.locations) >= limit:
+                region.locations.append(
+                    UTLocation(world.player, key, data.id, data.region)
+                )
+
+    # Attach map item locations up to the item-per-map limit
+    count = 0
+    for key, data in Map_locations.items():
+        for name, region in created_regions.items():
+            if data.region == region.name:
+                if count >= world.options.RandomItemsPerMap.value:
                     break
-                loc = UTLocation(world.player, key, data.id, data.region)
-                region.locations.append(loc)
+                region.locations.append(UTLocation(world.player, key, data.id, data.region))
+                count+=1
+
 
     # Attach ladder completion locations manually because sanity?
-    completion_tables = [Ladder_Completions, Ladder_Completion_TDM, Ladder_Completions_EX]
+    completion_tables = [Ladder_Completions]
+    if world.options.AddTDM:
+        completion_tables += Ladder_Completion_TDM
+    if world.options.ExtraLadders:
+        completion_tables += Ladder_Completions_EX
     for table in completion_tables:
         for loc_name, data in table.items():
-            for region in created_regions:
-                if data.region == region.name:
-                    loc = UTLocation(world.player, loc_name, data.id, data.region)
-                    region.locations.append(loc)
+            for name, region in created_regions.items():
+                if data.region == region.name and region.name not in region.locations:
+                    region.locations.append(
+                        UTLocation(world.player, loc_name, data.id, data.region)
+                    )
 
-    # Return mapping of region name to Region
-    return {region.name: region for region in created_regions}
+    return created_regions
 
 
 def create_all_regions_and_connections(world: "UT99World") -> None:
@@ -170,11 +176,9 @@ def create_all_regions_and_connections(world: "UT99World") -> None:
     UT_region_connections.update(create_DMregion_connections(world))
     UT_region_connections.update(create_CTFregion_connections(world))
     UT_region_connections.update(create_DOMregion_connections(world))
-
-    created_regions = create_regions(world)
-    create_connections(world.player, created_regions)
-    #create_all_events(world, created_regions)
-    world.multiworld.regions += created_regions.values()
+    regions = create_regions(world)
+    create_connections(world.player, regions)
+    world.multiworld.regions += regions.values()
 
 
 # An "Entrance" is really just a connection between two regions

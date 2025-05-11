@@ -14,6 +14,7 @@ class ProgressiveWeapons(Toggle):
     """Shuffel progressive Weapon unlocks into the pool.
     Doing this will make the game harder as you will only start with an enforcer"""
     display_name = "Progressive Weapons"
+    default = False
 
 class ProgressiveArmor(Toggle):
     """Shuffle Progressive Armor unlocks into the pool.
@@ -21,12 +22,14 @@ class ProgressiveArmor(Toggle):
 
     Thigh-Pads Chest and ShieldBelt"""
     display_name = "Progressive Armor"
+    default = False
 
 
 class ProgressiveBotUpgrades(Toggle):
     """In Team Games you will be given Bot companions.
     if you turn this option on your bots will start out weaker than normal and be augemnted with upgrades"""
     display_name = "Progressive Bot Stats"
+    default = False
 
 
 class EndGoal(Choice):
@@ -61,6 +64,7 @@ class StartingLadder(Choice):
 
 
 class ShuffleLadderUnlocks(Choice):
+    """Shuffle the ladder unlocks themselves as items"""
     Display = "Ladder Unlocks as Items"
     option_yes = 1
     option_no = 0
@@ -78,16 +82,19 @@ class RandomMapsPerLadder(Choice):
 class VaryRandomMapNumber(Toggle):
     """Allow for Ladders to have a random number of maps set"""
     display_name = "Random Map Count Per Ladder"
+    default = False
 
 
 class ExtraLadders(Toggle):
     """Enable to add extra ladders"""
     display_name="Add Extra Ladders"
+    default = False
 
 
 class AddTDM(Toggle):
     """Enable to add Team Death Match to the ladder"""
     display_name = "Add Team DeathMatch"
+    default = False
 
 
 class ExtraLaddersNumber(Range):
@@ -200,6 +207,7 @@ class MapsPerEX3(Range):
 class CustomMapRanges(Toggle):
     """Set this if you want to manually set your map counts per ladder"""
     Display = "Enable Manual Map Count Ranges"
+    default = False
 
 
 @dataclass

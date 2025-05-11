@@ -51,7 +51,7 @@ def create_item(world: "UT99World", name: str) -> Item:
 
 def create_all_items(world: "UT99World") -> None:
     player = world.player
-    ExCount = world.options.ExtraLadders.value
+    ExCount = world.options.ExtraLaddersNumber.value
     locations_to_fill = len(world.multiworld.get_unfilled_locations(player))
     itempool:List[str]=[]
 
@@ -61,10 +61,10 @@ def create_all_items(world: "UT99World") -> None:
     if ExCount > 0:
         itempool += create_extra_ladder_items(ExCount)
 
-    if world.options.ShuffleLadderUnlocks:
-        itempool += ladder_items
-        if world.options.AddTDM:
-            itempool += {"TDM-Ladder":ItemData(3,ItemClassification.progression)}
+    #if world.options.ShuffleLadderUnlocks:
+    itempool += ladder_items
+    if world.options.AddTDM:
+        itempool += {"TDM-Ladder":ItemData(3,ItemClassification.progression)}
 
     if world.options.prog_armor:
         itempool += create_progressives(3,"Progressive-Armor")

@@ -2,7 +2,7 @@ from BaseClasses import Item, Tutorial, MultiWorld
 from worlds.AutoWorld import WebWorld, World
 from typing import Dict, Any
 from . import Items, Locations, Regions, Rules
-from .Items import item_table, create_item
+from .Items import g_item_table, create_item
 from .Options import UTOptions, RandomItemsPerMap,ExtraLadders,CustomMapRanges,ExtraLaddersNumber,VaryRandomMapNumber,MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 
 from .Locations import location_table ,Ladder_Completions
@@ -46,7 +46,7 @@ class UT99World(World):
     options = UTOptions
     options_dataclass = UTOptions
 
-    item_name_to_id = {name: data.code for name, data in item_table.items()}
+    item_name_to_id = {name: data.code for name, data in g_item_table.items()}
     location_name_to_id = Locations.get_loc_names()
 
     web = UT99Web()

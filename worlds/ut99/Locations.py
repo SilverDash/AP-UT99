@@ -1124,6 +1124,17 @@ Map_locations={
 }
 
 location_table = {
+    #**Map_locations,
+    **DM_maps,
+    **TDM_maps,
+    **AS_maps,
+    **CTF_maps,
+    **DOM_maps,
+    **Challenge_maps
+    #**Ladder_Completions
+}
+
+g_location_table = {
     **Map_locations,
     **DM_maps,
     **TDM_maps,
@@ -1134,7 +1145,6 @@ location_table = {
     **Ladder_Completions
 }
 
-
 #"DM Map Item 1 (Map 1)" : LocData(100, "DM 1")
 def make_location_range(location_name: str, base_id: int, amt: int) -> Dict[str, int]:
     if amt == 1:
@@ -1143,9 +1153,7 @@ def make_location_range(location_name: str, base_id: int, amt: int) -> Dict[str,
 
 
 def get_loc_names() -> Dict[str,int]:
-    names = {name: data.id for name, data in location_table.items()}
+    names = {name: data.id for name, data in g_location_table.items()}
     return names
-
-
 
 

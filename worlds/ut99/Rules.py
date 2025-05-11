@@ -29,11 +29,13 @@ def set_rules(world: "UT99World"):
         set_rule(loc,lambda state: state.has("CTF-Ladder", world.player))
     for loc in world.get_region("Challenge").locations:
         set_rule(loc,lambda state: state.has("AS-Ladder", world.player))
-    for loc in world.get_region("AS").locations:
-        set_rule(loc,lambda state: state.has("AS-Ladder", world.player))
-    for loc in world.get_region("AS").locations:
-        set_rule(loc,lambda state: state.has("AS-Ladder", world.player))
-    for loc in world.get_region("AS").locations:
-        set_rule(loc,lambda state: state.has("AS-Ladder", world.player))
-    for loc in world.get_region("AS").locations:
-        set_rule(loc,lambda state: state.has("AS-Ladder", world.player))
+    if world.options.AddTDM:
+        for loc in world.get_region("TDM").locations:
+            set_rule(loc,lambda state: state.has("TDM-Ladder", world.player))
+    if world.options.ExtraLadders:
+        for loc in world.get_region("EX").locations:
+            set_rule(loc,lambda state: state.has("EX-Ladder", world.player))
+        for loc in world.get_region("EX2").locations:
+            set_rule(loc,lambda state: state.has("EX2-Ladder", world.player))
+        for loc in world.get_region("EX3").locations:
+            set_rule(loc,lambda state: state.has("EX3-Ladder", world.player))
