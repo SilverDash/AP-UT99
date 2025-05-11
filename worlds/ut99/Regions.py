@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 #Setting up the iterables for the globals. probably a better way to do this.....there was
 
-limit = 99
+limit = 999999
 
 
 UT_EX_region_Connections:Dict[str,List[str]] = {
@@ -112,7 +112,7 @@ UT_region_connections: Dict[str, List[str]] = {
 
 
 created_regions_list:Dict[str, Region]={}
-
+locID_list=[]
 
 # limitless by default and should never cause an error
 def create_region(world: "UT99World", name: str) -> Region:
@@ -123,10 +123,17 @@ def create_region(world: "UT99World", name: str) -> Region:
         if data.region == name:
             if count >= limit:
                 break
-            location = UTLocation(world.player,key,data.id)
-            reg.locations.append(location)
-            count+=1
-    world.multiworld.regions.append(reg)
+            location = UTLocation(world.player,key,data.id,data.region)
+            if data.id not in locID_list:
+                locID_list.append(data.id)
+                reg.locations.append(location)
+                count+=1
+        else:
+            location = UTLocation(world.player, key, data.id, data.region)
+            if data.id not in locID_list:
+                locID_list.append(data.id)
+                reg.locations.append(location)
+    #world.multiworld.regions.append(reg)
     return reg
 
 
@@ -156,7 +163,7 @@ def create_all_regions_and_connections(world: "UT99World") -> None:
     created_regions = create_regions(world)
     create_connections(world.player, created_regions)
     #create_all_events(world, created_regions)
-    world.multiworld.regions += created_regions_list.values()
+    world.multiworld.regions += created_regions.values()
 
 
 # An "Entrance" is really just a connection between two regions
