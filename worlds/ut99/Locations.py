@@ -1156,4 +1156,3 @@ def get_loc_names() -> Dict[str,int]:
     names = {name: data.id for name, data in g_location_table.items()}
     return names
 
-
