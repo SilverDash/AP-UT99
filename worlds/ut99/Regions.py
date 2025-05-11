@@ -1,7 +1,7 @@
 import collections
 
 from BaseClasses import Region, Entrance, ItemClassification, Location, LocationProgressType
-from .Locations import location_table,Ladder_Completion_TDM,Ladder_Completions_EX
+from .Locations import location_table, Ladder_Completion_TDM, Ladder_Completions_EX, Ladder_Completions
 from typing import TYPE_CHECKING, List, Dict
 from .Options import MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 import random
@@ -111,47 +111,58 @@ UT_region_connections: Dict[str, List[str]] = {
 }
 
 
-created_regions_list:Dict[str, Region]={}
+
 locID_list=[]
 
 # limitless by default and should never cause an error
 def create_region(world: "UT99World", name: str) -> Region:
     reg = Region(name, world.player, world.multiworld)
-    count = 0
-    # need the limit for options
-    for (key, data) in location_table.items():
-        if data.region == name:
-            if count >= limit:
-                break
-            location = UTLocation(world.player,key,data.id,data.region)
-            if data.id not in locID_list:
-                locID_list.append(data.id)
-                reg.locations.append(location)
-                count+=1
-        else:
-            location = UTLocation(world.player, key, data.id, data.region)
-            if data.id not in locID_list:
-                locID_list.append(data.id)
-                reg.locations.append(location)
     #world.multiworld.regions.append(reg)
     return reg
 
 
+
 def create_regions(world: "UT99World") -> Dict[str, Region]:
-    _local_table:Dict[str, List[str]] = {}
+
+    # Add extra ladder regions if enabled
     if world.options.ExtraLadders:
-        UT_region_connections["LadderScreen"].append("EX")
+        UT_region_connections.setdefault("LadderScreen", []).extend(["EX", "EX2", "EX3"])
         UT_region_connections.update(create_EXregion_connections(world))
-        UT_region_connections["LadderScreen"].append("EX2")
         UT_region_connections.update(create_EX2region_connections(world))
-        UT_region_connections["LadderScreen"].append("EX3")
         UT_region_connections.update(create_EX3region_connections(world))
+
+    # Add TDM regions if enabled
     if world.options.AddTDM:
-        UT_region_connections.update({"TDM":["TDM 1"]})
-        UT_region_connections["LadderScreen"].append("TDM")
+        UT_region_connections.setdefault("LadderScreen", []).append("TDM")
+        UT_region_connections["TDM"] = ["TDM 1"]
         UT_region_connections.update(create_TDMregion_connections(world))
-    _local_table.update(UT_region_connections)
-    return {name: create_region(world, name) for name in _local_table}
+
+    # Create each region once and append
+    created_regions: List[Region] = []
+    for region_name in UT_region_connections:
+        region = create_region(world, region_name)
+        created_regions.append(region)
+
+    # Attach map locations up to the item-per-map limit
+    for key, data in location_table.items():
+        for region in created_regions:
+            if data.region == region.name:
+                if limit is not None and len(region.locations) >= limit:
+                    break
+                loc = UTLocation(world.player, key, data.id, data.region)
+                region.locations.append(loc)
+
+    # Attach ladder completion locations manually because sanity?
+    completion_tables = [Ladder_Completions, Ladder_Completion_TDM, Ladder_Completions_EX]
+    for table in completion_tables:
+        for loc_name, data in table.items():
+            for region in created_regions:
+                if data.region == region.name:
+                    loc = UTLocation(world.player, loc_name, data.id, data.region)
+                    region.locations.append(loc)
+
+    # Return mapping of region name to Region
+    return {region.name: region for region in created_regions}
 
 
 def create_all_regions_and_connections(world: "UT99World") -> None:
