@@ -61,35 +61,35 @@ def set_mapranges(world: "UT99World"):
 
 
 def create_DMregion_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"DM {i}": [f"DM {j}"] for i, j in zip(world.DMRange, world.DMRange[1:])},
+    return {**{f"DM {i}": [f"DM {j}"] for i, j in zip(world.DMRange[1:], world.DMRange[1:])},
             f"DM {world.DMRange[-1]}": ["LadderScreen"]}
 
 def create_TDMregion_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"TDM {i}": [f"TDM {j}"] for i, j in zip(world.TDMRange, world.TDMRange[1:])},
+    return {**{f"TDM {i}": [f"TDM {j}"] for i, j in zip(world.TDMRange[1:], world.TDMRange[1:])},
             f"TDM {world.TDMRange[-1]}": ["LadderScreen"]}
 
 def create_ASregion_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"AS {i}": [f"AS {j}"] for i, j in zip(world.ASRange, world.ASRange[1:])},
+    return {**{f"AS {i}": [f"AS {j}"] for i, j in zip(world.ASRange[1:], world.ASRange[1:])},
             f"AS {world.ASRange[-1]}": ["LadderScreen"]}
 
 def create_DOMregion_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"DOM {i}": [f"DOM {j}"] for i, j in zip(world.DOMRange, world.DOMRange[1:])},
+    return {**{f"DOM {i}": [f"DOM {j}"] for i, j in zip(world.DOMRange[1:], world.DOMRange[1:])},
             f"DOM {world.DOMRange[-1]}": ["LadderScreen"]}
 
 def create_CTFregion_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"CTF {i}": [f"CTF {j}"] for i, j in zip(world.CTFRange, world.CTFRange[1:])},
+    return {**{f"CTF {i}": [f"CTF {j}"] for i, j in zip(world.CTFRange[1:], world.CTFRange[1:])},
             f"CTF {world.CTFRange[-1]}": ["LadderScreen"]}
 
 def create_EXregion_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"EX {i}": [f"EX {j}"] for i, j in zip(world.EXRange, world.EXRange[1:])},
+    return {**{f"EX {i}": [f"EX {j}"] for i, j in zip(world.EXRange[1:], world.EXRange[1:])},
             f"EX {world.EXRange[-1]}": ["LadderScreen"],}
 
 def create_EX2region_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"EX2 {i}": [f"EX2 {j}"] for i, j in zip(world.EX2Range, world.EX2Range[1:])},
+    return {**{f"EX2 {i}": [f"EX2 {j}"] for i, j in zip(world.EX2Range[1:], world.EX2Range[1:])},
             f"EX2 {world.EX2Range[-1]}": ["LadderScreen"]}
 
 def create_EX3region_connections(world:"UT99World") -> Dict[str, List[str]]:
-    return {**{f"EX3 {i}": [f"EX3 {j}"] for i, j in zip(world.EX3Range, world.EX3Range[1:])},
+    return {**{f"EX3 {i}": [f"EX3 {j}"] for i, j in zip(world.EX3Range[1:], world.EX3Range[1:])},
             f"EX3 {world.EX3Range[-1]}": ["LadderScreen"]}
 
 

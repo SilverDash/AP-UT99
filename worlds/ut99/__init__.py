@@ -88,7 +88,7 @@ class UT99World(World):
 
     # Lots to send to the client
     def fill_slot_data(self) -> Dict[str, Any]:
-        return self.Options.as_dict("death_link","EndGoal","prog_armor","prog_weapons",
+        return self.options.as_dict("death_link","EndGoal","prog_armor","prog_weapons",
                                     "prog_Bots","RandomMapsPerLadder","VaryRandomMapNumber","ExtraLaddersNumber",
                                     "ShuffleLadderUnlocks","StartingLadder","LadderRandomizer","ExtraLadders",
                                     "RandomItemsPerMap","CustomMapRanges","MapsPerAS","MapsPerDM","MapsPerTDM",
