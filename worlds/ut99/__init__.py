@@ -43,7 +43,7 @@ class UT99World(World):
     You'll participate in a multitude of matches of game modes to win the tournament.
     """
     game = "Unreal Tournament"
-    options = UTOptions
+    options: UTOptions
     options_dataclass = UTOptions
 
     item_name_to_id = {name: data.code for name, data in g_item_table.items()}

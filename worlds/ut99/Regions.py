@@ -110,8 +110,7 @@ UT_region_connections: Dict[str, List[str]] = {
 
 
 def create_region(world: "UT99World", name: str) -> Region:
-    reg = Region(name, world.player, world.multiworld)
-    return reg
+    return Region(name, world.player, world.multiworld)
 
 
 def create_regions(world: "UT99World") -> Dict[str, Region]:
@@ -131,8 +130,8 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
     # Create each region once and append
     created_regions: Dict[str, Region] = {}
     for region_name in UT_region_connections:
-        region = create_region(world, region_name)
-        created_regions[region_name] = region
+        new_region = create_region(world, region_name)
+        created_regions[region_name] = new_region
 
 
     # Attach map locations
@@ -140,7 +139,7 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
         for name, region in created_regions.items():
             if data.region == region.name:
                 region.locations.append(
-                    UTLocation(world.player, key, data.id, data.region)
+                    UTLocation(world.player, key, data.id, region)
                 )
 
     # Attach map item locations up to the item-per-map limit
@@ -150,7 +149,7 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
             if data.region == region.name:
                 if count >= world.options.RandomItemsPerMap.value:
                     break
-                region.locations.append(UTLocation(world.player, key, data.id, data.region))
+                region.locations.append(UTLocation(world.player, key, data.id, region))
                 count+=1
 
 
@@ -165,7 +164,7 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
             for name, region in created_regions.items():
                 if data.region == region.name and region.name not in region.locations:
                     region.locations.append(
-                        UTLocation(world.player, loc_name, data.id, data.region)
+                        UTLocation(world.player, loc_name, data.id, region)
                     )
 
     return created_regions
