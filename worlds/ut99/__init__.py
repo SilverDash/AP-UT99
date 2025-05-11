@@ -1,4 +1,5 @@
 from BaseClasses import Item, Tutorial, MultiWorld
+from Options import OptionError
 from worlds.AutoWorld import WebWorld, World
 from typing import Dict, Any
 from . import Items, Locations, Regions, Rules
@@ -65,7 +66,7 @@ class UT99World(World):
 
     def generate_early(self):
         if not self.multiworld.get_player_name(self.player).isascii():
-            raise Exception("UT99 yaml's slot name has invalid character(s).")
+            raise OptionError("UT99 yaml's slot name has invalid character(s).")
         Regions.set_mapranges(self)
 
     def create_regions(self):
