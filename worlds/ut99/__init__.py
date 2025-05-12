@@ -81,6 +81,7 @@ class UT99World(World):
 
     def create_regions(self):
         Regions.create_all_regions_and_connections(self)
+        self.multiworld.completion_condition[self.player] = lambda state: state.has("Victory", self.player)
         self.multiworld.get_location("CHALLANGE Map 4 Completion",self.player).place_locked_item(
             create_item(self, "Victory"))
         if not self.options.ShuffleLadderUnlocks:
