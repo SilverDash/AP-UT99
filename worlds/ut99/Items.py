@@ -16,6 +16,8 @@ ladder_items:Dict[str, ItemData] ={
     "Challange-Ladder":ItemData(6,ItemClassification.progression_skip_balancing)
 }
 
+victory_item={"Victory":ItemData(42069,ItemClassification.progression)}
+
 
 ex_ladder_items:Dict[str,ItemData]={
     "Extra-Ladder":ItemData(7,ItemClassification.progression)
@@ -40,7 +42,8 @@ g_item_table = {
     **prog_items,
     **ladder_items,
     **ex_ladder_items,
-    **item_table
+    **item_table,
+    **victory_item
 }
 
 
@@ -55,14 +58,14 @@ def create_all_items(world: "UT99World") -> None:
     locations_to_fill = len(world.multiworld.get_unfilled_locations(player))
     itempool:List[str]=[]
 
-    itempool += item_table
+    #itempool += item_table
 
     # Create the extra ladders if set
     if ExCount > 0:
         itempool += create_extra_ladder_items(ExCount)
 
-    #if world.options.ShuffleLadderUnlocks:
-    itempool += ladder_items
+    if world.options.ShuffleLadderUnlocks:
+        itempool += ladder_items
     if world.options.AddTDM:
         itempool += {"TDM-Ladder":ItemData(3,ItemClassification.progression)}
 

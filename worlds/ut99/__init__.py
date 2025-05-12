@@ -3,7 +3,7 @@ from Options import OptionError
 from worlds.AutoWorld import WebWorld, World
 from typing import Dict, Any
 from . import Items, Locations, Regions, Rules
-from .Items import g_item_table, create_item
+from .Items import g_item_table, create_item,victory_item
 from .Options import UTOptions, RandomItemsPerMap,ExtraLadders,CustomMapRanges,ExtraLaddersNumber,VaryRandomMapNumber,MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 
 from .Locations import location_table ,Ladder_Completions
@@ -68,9 +68,12 @@ class UT99World(World):
         if not self.multiworld.get_player_name(self.player).isascii():
             raise OptionError("UT99 yaml's slot name has invalid character(s).")
         Regions.set_mapranges(self)
+        Locations.create_Ladder_Completions(self)
 
     def create_regions(self):
         Regions.create_all_regions_and_connections(self)
+        self.multiworld.get_location("CHALLANGE Map 4 Completion",self.player).place_locked_item(create_item(self, "Victory"))
+
         if not self.options.ShuffleLadderUnlocks:
             for loc_name, loc_data in Ladder_Completions.items():
                 loc = self.get_location(loc_name)

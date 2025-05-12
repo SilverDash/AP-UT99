@@ -1,134 +1,168 @@
 from .Types import LocData
 from typing import Dict, TYPE_CHECKING
+from .Options import MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 
 
 if TYPE_CHECKING:
     from . import UT99World
 
+
 Ladder_Completions={
     "Ladder Completion (AS)":LocData(3000,"AS",required_ladderItem=["AS-Ladder"]),
     "Ladder Completion (DM)":LocData(3001,"DM",required_ladderItem=["DM-Ladder"]),
     "Ladder Completion (CTF)":LocData(3003,"CTF",required_ladderItem=["CTF-Ladder"]),
-    "Ladder Completion (DOM)":LocData(3004,"DOM",required_ladderItem=["DOM-Ladder"]),
+    "Ladder Completion (DOM)":LocData(3004,"DOM",required_ladderItem=["DOM-Ladder"])
 }
-Ladder_Completion_TDM={"Ladder Completion (TDM)":LocData(3002,"TDM",required_ladderItem=["TDM-Ladder"])}
 
-Ladder_Completions_EX={
-    "Ladder Completion (EX)":LocData(3005,"EX",required_ladderItem=["EX-Ladder"]),
-    "Ladder Completion (EX2)":LocData(3006,"EX2",required_ladderItem=["EX2-Ladder"]),
-    "Ladder Completion (EX3)":LocData(3007,"EX3",required_ladderItem=["EX3-Ladder"])}
+# Create the Ladder completion locations. The region is based on the final map set
+def create_AS_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (AS)" : LocData(3000,f"AS {world.options.MapsPerAS}",required_ladderItem=["AS-Ladder"])}
+
+def create_DM_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion DM)" : LocData(3001,f"DM {world.options.MapsPerDM}",required_ladderItem=["DM-Ladder"])}
+
+def create_TDM_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (TDM)" : LocData(3002,f"TDM {world.options.MapsPerTDM}",required_ladderItem=["TDM-Ladder"])}
+
+def create_CTF_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (CTF)" : LocData(3003,f"CTF {world.options.MapsPerCTF}",required_ladderItem=["CTF-Ladder"])}
+
+def create_DOM_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (DOM)" : LocData(3004,f"DOM {world.options.MapsPerDOM}",required_ladderItem=["DOM-Ladder"])}
+
+def create_EX_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (EX)" : LocData(3005,f"EX {world.options.MapsPerEX}",required_ladderItem=["EX-Ladder"])}
+
+def create_EX2_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (EX2)" : LocData(3006,f"EX2 {world.options.MapsPerEX2}",required_ladderItem=["EX2-Ladder"])}
+
+def create_EX3_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
+    return {f"Ladder Completion (EX3)" : LocData(3007,f"EX3 {world.options.MapsPerEX3}",required_ladderItem=["EX3-Ladder"])}
+
+def create_Ladder_Completions(world: "UT99World"):
+    Ladder_Completions.update(create_AS_Ladder_Completion(world))
+    Ladder_Completions.update(create_DM_Ladder_Completion(world))
+    Ladder_Completions.update(create_CTF_Ladder_Completion(world))
+    Ladder_Completions.update(create_DOM_Ladder_Completion(world))
+    if world.options.AddTDM:
+        Ladder_Completions.update(create_TDM_Ladder_Completion(world))
+    if world.options.ExtraLadders:
+        Ladder_Completions.update(create_EX_Ladder_Completion(world))
+        Ladder_Completions.update(create_EX2_Ladder_Completion(world))
+        Ladder_Completions.update(create_EX3_Ladder_Completion(world))
+
 
 DM_maps={
-          "DM Map 1 Completion" :LocData(3202, "DM"),
-          "DM Map 2 Completion" :LocData(3203, "DM"),
-          "DM Map 3 Completion" :LocData(3204, "DM"),
-          "DM Map 4 Completion" :LocData(3205, "DM"),
-          "DM Map 5 Completion" :LocData(3206, "DM"),
-          "DM Map 6 Completion" :LocData(3207, "DM"),
-          "DM Map 7 Completion" :LocData(3208, "DM"),
-          "DM Map 8 Completion" :LocData(3209, "DM"),
-          "DM Map 9 Completion" :LocData(3210, "DM"),
-          "DM Map 10 Completion":LocData(3211, "DM"),
-          "DM Map 11 Completion":LocData(3212, "DM"),
-          "DM Map 12 Completion":LocData(3213, "DM"),
-          "DM Map 13 Completion":LocData(3214, "DM"),
-          "DM Map 14 Completion":LocData(3215, "DM"),
-          "DM Map 15 Completion":LocData(3216, "DM"),
-          "DM Map 16 Completion":LocData(3217, "DM"),
-          "DM Map 17 Completion":LocData(3218, "DM"),
-          "DM Map 18 Completion":LocData(3219, "DM"),
-          "DM Map 19 Completion":LocData(3220, "DM"),
-          "DM Map 20 Completion":LocData(3221, "DM")}
+          "DM Map 1 Completion" :LocData(3202, "DM 1"),
+          "DM Map 2 Completion" :LocData(3203, "DM 2"),
+          "DM Map 3 Completion" :LocData(3204, "DM 3"),
+          "DM Map 4 Completion" :LocData(3205, "DM 4"),
+          "DM Map 5 Completion" :LocData(3206, "DM 5"),
+          "DM Map 6 Completion" :LocData(3207, "DM 6"),
+          "DM Map 7 Completion" :LocData(3208, "DM 7"),
+          "DM Map 8 Completion" :LocData(3209, "DM 8"),
+          "DM Map 9 Completion" :LocData(3210, "DM 9"),
+          "DM Map 10 Completion":LocData(3211, "DM 10"),
+          "DM Map 11 Completion":LocData(3212, "DM 11"),
+          "DM Map 12 Completion":LocData(3213, "DM 12"),
+          "DM Map 13 Completion":LocData(3214, "DM 13"),
+          "DM Map 14 Completion":LocData(3215, "DM 14"),
+          "DM Map 15 Completion":LocData(3216, "DM 15"),
+          "DM Map 16 Completion":LocData(3217, "DM 16"),
+          "DM Map 17 Completion":LocData(3218, "DM 17"),
+          "DM Map 18 Completion":LocData(3219, "DM 18"),
+          "DM Map 19 Completion":LocData(3220, "DM 19"),
+          "DM Map 20 Completion":LocData(3221, "DM 20")}
 
-TDM_maps={"TDM Map 1 Completion" :LocData(3102, "TDM"),
-          "TDM Map 2 Completion" :LocData(3103, "TDM"),
-          "TDM Map 3 Completion" :LocData(3104, "TDM"),
-          "TDM Map 4 Completion" :LocData(3105, "TDM"),
-          "TDM Map 5 Completion" :LocData(3106, "TDM"),
-          "TDM Map 6 Completion" :LocData(3107, "TDM"),
-          "TDM Map 7 Completion" :LocData(3108, "TDM"),
-          "TDM Map 8 Completion" :LocData(3109, "TDM"),
-          "TDM Map 9 Completion" :LocData(3110, "TDM"),
-          "TDM Map 10 Completion":LocData(3111, "TDM"),
-          "TDM Map 11 Completion":LocData(3112, "TDM"),
-          "TDM Map 12 Completion":LocData(3113, "TDM"),
-          "TDM Map 13 Completion":LocData(3114, "TDM"),
-          "TDM Map 14 Completion":LocData(3115, "TDM"),
-          "TDM Map 15 Completion":LocData(3116, "TDM"),
-          "TDM Map 16 Completion":LocData(3117, "TDM"),
-          "TDM Map 17 Completion":LocData(3118, "TDM"),
-          "TDM Map 18 Completion":LocData(3119, "TDM"),
-          "TDM Map 19 Completion":LocData(3120, "TDM"),
-          "TDM Map 20 Completion":LocData(3121, "TDM")}
+TDM_maps={"TDM Map 1 Completion" :LocData(3102, "TDM 1"),
+          "TDM Map 2 Completion" :LocData(3103, "TDM 2"),
+          "TDM Map 3 Completion" :LocData(3104, "TDM 3"),
+          "TDM Map 4 Completion" :LocData(3105, "TDM 4"),
+          "TDM Map 5 Completion" :LocData(3106, "TDM 5"),
+          "TDM Map 6 Completion" :LocData(3107, "TDM 6"),
+          "TDM Map 7 Completion" :LocData(3108, "TDM 7"),
+          "TDM Map 8 Completion" :LocData(3109, "TDM 8"),
+          "TDM Map 9 Completion" :LocData(3110, "TDM 9"),
+          "TDM Map 10 Completion":LocData(3111, "TDM 10"),
+          "TDM Map 11 Completion":LocData(3112, "TDM 11"),
+          "TDM Map 12 Completion":LocData(3113, "TDM 12"),
+          "TDM Map 13 Completion":LocData(3114, "TDM 13"),
+          "TDM Map 14 Completion":LocData(3115, "TDM 14"),
+          "TDM Map 15 Completion":LocData(3116, "TDM 15"),
+          "TDM Map 16 Completion":LocData(3117, "TDM 16"),
+          "TDM Map 17 Completion":LocData(3118, "TDM 17"),
+          "TDM Map 18 Completion":LocData(3119, "TDM 18"),
+          "TDM Map 19 Completion":LocData(3120, "TDM 19"),
+          "TDM Map 20 Completion":LocData(3121, "TDM 20")}
 
-AS_maps={ "AS Map 1 Completion" :LocData(4102, "AS"),
-          "AS Map 2 Completion" :LocData(4103, "AS"),
-          "AS Map 3 Completion" :LocData(4104, "AS"),
-          "AS Map 4 Completion" :LocData(4105, "AS"),
-          "AS Map 5 Completion" :LocData(4106, "AS"),
-          "AS Map 6 Completion" :LocData(4107, "AS"),
-          "AS Map 7 Completion" :LocData(4108, "AS"),
-          "AS Map 8 Completion" :LocData(4109, "AS"),
-          "AS Map 9 Completion" :LocData(4110, "AS"),
-          "AS Map 10 Completion":LocData(4111, "AS"),
-          "AS Map 11 Completion":LocData(4112, "AS"),
-          "AS Map 12 Completion":LocData(4113, "AS"),
-          "AS Map 13 Completion":LocData(4114, "AS"),
-          "AS Map 14 Completion":LocData(4115, "AS"),
-          "AS Map 15 Completion":LocData(4116, "AS"),
-          "AS Map 16 Completion":LocData(4117, "AS"),
-          "AS Map 17 Completion":LocData(4118, "AS"),
-          "AS Map 18 Completion":LocData(4119, "AS"),
-          "AS Map 19 Completion":LocData(4120, "AS"),
-          "AS Map 20 Completion":LocData(4121, "AS")}
+AS_maps={ "AS Map 1 Completion" :LocData(4102, "AS 1"),
+          "AS Map 2 Completion" :LocData(4103, "AS 2"),
+          "AS Map 3 Completion" :LocData(4104, "AS 3"),
+          "AS Map 4 Completion" :LocData(4105, "AS 4"),
+          "AS Map 5 Completion" :LocData(4106, "AS 5"),
+          "AS Map 6 Completion" :LocData(4107, "AS 6"),
+          "AS Map 7 Completion" :LocData(4108, "AS 7"),
+          "AS Map 8 Completion" :LocData(4109, "AS 8"),
+          "AS Map 9 Completion" :LocData(4110, "AS 9"),
+          "AS Map 10 Completion":LocData(4111, "AS 10"),
+          "AS Map 11 Completion":LocData(4112, "AS 12"),
+          "AS Map 12 Completion":LocData(4113, "AS 13"),
+          "AS Map 13 Completion":LocData(4114, "AS 14"),
+          "AS Map 14 Completion":LocData(4115, "AS 15"),
+          "AS Map 15 Completion":LocData(4116, "AS 16"),
+          "AS Map 16 Completion":LocData(4117, "AS 17"),
+          "AS Map 17 Completion":LocData(4118, "AS 18"),
+          "AS Map 18 Completion":LocData(4119, "AS 19"),
+          "AS Map 19 Completion":LocData(4120, "AS 10"),
+          "AS Map 20 Completion":LocData(4121, "AS 20")}
 
-CTF_maps={"CTF Map 1 Completion" :LocData(5102, "CTF"),
-          "CTF Map 2 Completion" :LocData(5103, "CTF"),
-          "CTF Map 3 Completion" :LocData(5104, "CTF"),
-          "CTF Map 4 Completion" :LocData(5105, "CTF"),
-          "CTF Map 5 Completion" :LocData(5106, "CTF"),
-          "CTF Map 6 Completion" :LocData(5107, "CTF"),
-          "CTF Map 7 Completion" :LocData(5108, "CTF"),
-          "CTF Map 8 Completion" :LocData(5109, "CTF"),
-          "CTF Map 9 Completion" :LocData(5110, "CTF"),
-          "CTF Map 10 Completion":LocData(5111, "CTF"),
-          "CTF Map 11 Completion":LocData(5112, "CTF"),
-          "CTF Map 12 Completion":LocData(5113, "CTF"),
-          "CTF Map 13 Completion":LocData(5114, "CTF"),
-          "CTF Map 14 Completion":LocData(5115, "CTF"),
-          "CTF Map 15 Completion":LocData(5116, "CTF"),
-          "CTF Map 16 Completion":LocData(5117, "CTF"),
-          "CTF Map 17 Completion":LocData(5118, "CTF"),
-          "CTF Map 18 Completion":LocData(5119, "CTF"),
-          "CTF Map 19 Completion":LocData(5120, "CTF"),
-          "CTF Map 20 Completion":LocData(5121, "CTF")}
+CTF_maps={"CTF Map 1 Completion" :LocData(5102, "CTF 1"),
+          "CTF Map 2 Completion" :LocData(5103, "CTF 2"),
+          "CTF Map 3 Completion" :LocData(5104, "CTF 3"),
+          "CTF Map 4 Completion" :LocData(5105, "CTF 4"),
+          "CTF Map 5 Completion" :LocData(5106, "CTF 5"),
+          "CTF Map 6 Completion" :LocData(5107, "CTF 6"),
+          "CTF Map 7 Completion" :LocData(5108, "CTF 7"),
+          "CTF Map 8 Completion" :LocData(5109, "CTF 8"),
+          "CTF Map 9 Completion" :LocData(5110, "CTF 9"),
+          "CTF Map 10 Completion":LocData(5111, "CTF 10"),
+          "CTF Map 11 Completion":LocData(5112, "CTF 11"),
+          "CTF Map 12 Completion":LocData(5113, "CTF 12"),
+          "CTF Map 13 Completion":LocData(5114, "CTF 13"),
+          "CTF Map 14 Completion":LocData(5115, "CTF 14"),
+          "CTF Map 15 Completion":LocData(5116, "CTF 15"),
+          "CTF Map 16 Completion":LocData(5117, "CTF 16"),
+          "CTF Map 17 Completion":LocData(5118, "CTF 17"),
+          "CTF Map 18 Completion":LocData(5119, "CTF 18"),
+          "CTF Map 19 Completion":LocData(5120, "CTF 19"),
+          "CTF Map 20 Completion":LocData(5121, "CTF 20")}
 
-DOM_maps={"DOM Map 1 Completion" :LocData(6102, "DOM"),
-          "DOM Map 2 Completion" :LocData(6103, "DOM"),
-          "DOM Map 3 Completion" :LocData(6104, "DOM"),
-          "DOM Map 4 Completion" :LocData(6105, "DOM"),
-          "DOM Map 5 Completion" :LocData(6106, "DOM"),
-          "DOM Map 6 Completion" :LocData(6107, "DOM"),
-          "DOM Map 7 Completion" :LocData(6108, "DOM"),
-          "DOM Map 8 Completion" :LocData(6109, "DOM"),
-          "DOM Map 9 Completion" :LocData(6110, "DOM"),
-          "DOM Map 10 Completion":LocData(6111, "DOM"),
-          "DOM Map 11 Completion":LocData(6112, "DOM"),
-          "DOM Map 12 Completion":LocData(6113, "DOM"),
-          "DOM Map 13 Completion":LocData(6114, "DOM"),
-          "DOM Map 14 Completion":LocData(6115, "DOM"),
-          "DOM Map 15 Completion":LocData(6116, "DOM"),
-          "DOM Map 16 Completion":LocData(6117, "DOM"),
-          "DOM Map 17 Completion":LocData(6118, "DOM"),
-          "DOM Map 18 Completion":LocData(6119, "DOM"),
-          "DOM Map 19 Completion":LocData(6120, "DOM"),
-          "DOM Map 20 Completion":LocData(6121, "DOM")}
+DOM_maps={"DOM Map 1 Completion" :LocData(6102, "DOM 1"),
+          "DOM Map 2 Completion" :LocData(6103, "DOM 2"),
+          "DOM Map 3 Completion" :LocData(6104, "DOM 3"),
+          "DOM Map 4 Completion" :LocData(6105, "DOM 4"),
+          "DOM Map 5 Completion" :LocData(6106, "DOM 5"),
+          "DOM Map 6 Completion" :LocData(6107, "DOM 6"),
+          "DOM Map 7 Completion" :LocData(6108, "DOM 7"),
+          "DOM Map 8 Completion" :LocData(6109, "DOM 8"),
+          "DOM Map 9 Completion" :LocData(6110, "DOM 9"),
+          "DOM Map 10 Completion":LocData(6111, "DOM 10"),
+          "DOM Map 11 Completion":LocData(6112, "DOM 11"),
+          "DOM Map 12 Completion":LocData(6113, "DOM 12"),
+          "DOM Map 13 Completion":LocData(6114, "DOM 13"),
+          "DOM Map 14 Completion":LocData(6115, "DOM 14"),
+          "DOM Map 15 Completion":LocData(6116, "DOM 15"),
+          "DOM Map 16 Completion":LocData(6117, "DOM 16"),
+          "DOM Map 17 Completion":LocData(6118, "DOM 17"),
+          "DOM Map 18 Completion":LocData(6119, "DOM 18"),
+          "DOM Map 19 Completion":LocData(6120, "DOM 19"),
+          "DOM Map 20 Completion":LocData(6121, "DOM 20")}
 
 Challenge_maps={
-          "CHALLANGE Map 1 Completion":LocData(7102, "CHALLANGE"),
-          "CHALLANGE Map 2 Completion":LocData(7103, "CHALLANGE"),
-          "CHALLANGE Map 3 Completion":LocData(7104, "CHALLANGE"),
-          "CHALLANGE Map 4 Completion":LocData(7105, "CHALLANGE"),
+          "CHALLANGE Map 1 Completion":LocData(7102, "Challenge"),
+          "CHALLANGE Map 2 Completion":LocData(7103, "Challenge 1"),
+          "CHALLANGE Map 3 Completion":LocData(7104, "Challenge 2"),
+          "CHALLANGE Map 4 Completion":LocData(7105, "Challenge 3"),
 }
 
 Map_locations={
