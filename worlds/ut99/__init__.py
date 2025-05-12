@@ -49,37 +49,50 @@ class UT99World(World):
 
     item_name_to_id = {name: data.code for name, data in g_item_table.items()}
     location_name_to_id = Locations.get_loc_names()
+    TDMRange: range
+    DMRange: range
+    ASRange: range
+    DOMRange: range
+    CTFRange: range
+    EXRange: range
+    EX2Range: range
+    EX3Range: range
 
     web = UT99Web()
     # and there was a better way. Thanks medic
     def __init__(self, multiworld: "MultiWorld", player: int):
         super().__init__(multiworld, player)
-        self.TDMRange = range(MapsPerTDM.default)
-        self.DMRange = range(MapsPerDM.default)
-        self.ASRange = range(MapsPerAS.default)
-        self.DOMRange = range(MapsPerDOM.default)
-        self.CTFRange = range(MapsPerCTF.default)
-        self.EXRange = range(MapsPerEX.default)
-        self.EX2Range = range(MapsPerEX2.default)
-        self.EX3Range = range(MapsPerEX3.default)
+
 
 
     def generate_early(self):
         if not self.multiworld.get_player_name(self.player).isascii():
             raise OptionError("UT99 yaml's slot name has invalid character(s).")
+        self.TDMRange = range(self.options.MapsPerTDM.value+1)
+        self.DMRange = range(self.options.MapsPerDM.value+1)
+        self.ASRange = range(self.options.MapsPerAS.value+1)
+        self.DOMRange = range(self.options.MapsPerDOM.value+1)
+        self.CTFRange = range(self.options.MapsPerCTF.value+1)
+        self.EXRange = range(self.options.MapsPerEX.value+1)
+        self.EX2Range = range(self.options.MapsPerEX2.value+1)
+        self.EX3Range = range(self.options.MapsPerEX3.value+1)
         Regions.set_mapranges(self)
 
 
     def create_regions(self):
         Regions.create_all_regions_and_connections(self)
-        self.multiworld.get_location("CHALLANGE Map 4 Completion",self.player).place_locked_item(create_item(self, "Victory"))
-
+        self.multiworld.get_location("CHALLANGE Map 4 Completion",self.player).place_locked_item(
+            create_item(self, "Victory"))
         if not self.options.ShuffleLadderUnlocks:
-            for loc_name, loc_data in Ladder_Completions.items():
-                loc = self.get_location(loc_name)
-                for item_name in loc_data.required_ladderItem:
-                    item = create_item(self, item_name)
-                    loc.place_locked_item(item)
+            self.multiworld.get_location("Ladder Completion (DM)", self.player).place_locked_item(
+                create_item(self, "DOM-Ladder"))
+            self.multiworld.get_location("Ladder Completion (DOM)", self.player).place_locked_item(
+                create_item(self, "CTF-Ladder"))
+            self.multiworld.get_location("Ladder Completion (CTF)", self.player).place_locked_item(
+                create_item(self, "AS-Ladder"))
+            self.multiworld.get_location("Ladder Completion (AS)", self.player).place_locked_item(
+                create_item(self, "Challange-Ladder"))
+
 
     def create_items(self):
         Items.create_all_items(self)

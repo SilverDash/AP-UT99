@@ -38,26 +38,15 @@ def set_mapranges(world: "UT99World"):
             world.EX3Range = range(MapsPerEX3.range_start, random.randrange(MapsPerEX3.range_start, 21))
     #exact custom range
     elif world.options.CustomMapRanges:
-        world.TDMRange = range(MapsPerTDM.range_start, world.options.MapsPerTDM.value+1)
-        world.DMRange = range(MapsPerDM.range_start, world.options.MapsPerDM.value+1)
-        world.ASRange = range(MapsPerAS.range_start,  world.options.MapsPerAS.value+1)
-        world.DOMRange = range(MapsPerDOM.range_start, world.options.MapsPerDOM.value+1)
-        world.CTFRange = range(MapsPerCTF.range_start,  world.options.MapsPerCTF.value+1)
+        world.TDMRange = range(world.options.MapsPerDM.value+1)
+        world.DMRange = range(world.options.MapsPerDM.value+1)
+        world.ASRange = range(world.options.MapsPerAS.value+1)
+        world.DOMRange = range(world.options.MapsPerDOM.value+1)
+        world.CTFRange = range(world.options.MapsPerCTF.value+1)
         if world.options.ExtraLadders:
-            world.EXRange = range(MapsPerEX.range_start,  world.options.MapsPerEX.value+1)
-            world.EX2Range = range(MapsPerEX2.range_start,  world.options.MapsPerEX2.value+1)
-            world.EX3Range = range(MapsPerEX3.range_start,  world.options.MapsPerEX3.value+1)
-    #default values
-    else:
-        world.TDMRange = range(MapsPerTDM.range_start)
-        world.DMRange = range(MapsPerDM.range_start)
-        world.ASRange = range(MapsPerAS.range_start)
-        world.DOMRange = range(MapsPerDOM.range_start)
-        world.CTFRange = range(MapsPerCTF.range_start)
-        if world.options.ExtraLadders:
-            world.EXRange = range(MapsPerEX.range_start)
-            world.EX2Range = range(MapsPerEX2.range_start)
-            world.EX3Range = range(MapsPerEX3.range_start)
+            world.EXRange = range(world.options.MapsPerEX.value+1)
+            world.EX2Range = range(world.options.MapsPerEX2.value+1)
+            world.EX3Range = range(world.options.MapsPerEX3.value+1)
 
 
 def create_DMregion_connections(world:"UT99World") -> Dict[str, List[str]]:
@@ -144,6 +133,7 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
 
     # Attach map item locations up to the item-per-map limit
     count = 0
+
     for key, data in Map_locations.items():
         for name, region in created_regions.items():
             if data.region == region.name:
@@ -153,17 +143,16 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
                 count+=1
 
 
+
     # Attach ladder completion locations manually because sanity?
-    create_Ladder_Completions(world)
-    for table in Ladder_Completions:
-        for loc_name, data in table.items():
-            if loc_name == "Ladder Completion (AS)":
-                print("Ladder Completion (AS)")
-            for name, region in created_regions.items():
-                if data.region == region.name and region.name not in region.locations:
-                    region.locations.append(
-                        UTLocation(world.player, loc_name, data.id, region)
-                    )
+    ladder_comp = create_Ladder_Completions(world)
+    for loc_name, data in ladder_comp.items():
+        for name, region in created_regions.items():
+            if data.region == region.name and loc_name not in world.multiworld.regions.location_cache:
+                region.locations.append(
+                    UTLocation(world.player, loc_name, data.id, region)
+                )
+
 
     return created_regions
 

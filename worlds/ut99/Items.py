@@ -60,14 +60,13 @@ def create_all_items(world: "UT99World") -> None:
 
     #itempool += item_table
 
-    # Create the extra ladders if set
-    if ExCount > 0:
-        itempool += create_extra_ladder_items(ExCount)
-
+    # Create the ladders if set
     if world.options.ShuffleLadderUnlocks:
         itempool += ladder_items
-    if world.options.AddTDM:
-        itempool += {"TDM-Ladder":ItemData(3,ItemClassification.progression)}
+        if ExCount > 0:
+            itempool += create_extra_ladder_items(ExCount)
+        if world.options.AddTDM:
+            itempool += {"TDM-Ladder":ItemData(3,ItemClassification.progression)}
 
     if world.options.prog_armor:
         itempool += create_progressives(3,"Progressive-Armor")

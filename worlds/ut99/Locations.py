@@ -11,30 +11,30 @@ Ladder_Completions={}
 
 # Create the Ladder completion locations. The region is based on the final map set
 def create_AS_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (AS)" : LocData(3000,f"AS {world.options.MapsPerAS}",required_ladderItem=["AS-Ladder"])}
+    return {**{f"Ladder Completion (AS)" : LocData(3000,f"AS {world.options.MapsPerAS}",required_ladderItem=["AS-Ladder"])}}
 
 def create_DM_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion DM)" : LocData(3001,f"DM {world.options.MapsPerDM}",required_ladderItem=["DM-Ladder"])}
+    return {**{f"Ladder Completion (DM)" : LocData(3001,f"DM {world.options.MapsPerDM}",required_ladderItem=["DM-Ladder"])}}
 
 def create_TDM_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (TDM)" : LocData(3002,f"TDM {world.options.MapsPerTDM}",required_ladderItem=["TDM-Ladder"])}
+    return {**{f"Ladder Completion (TDM)" : LocData(3002,f"TDM {world.options.MapsPerTDM}",required_ladderItem=["TDM-Ladder"])}}
 
 def create_CTF_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (CTF)" : LocData(3003,f"CTF {world.options.MapsPerCTF}",required_ladderItem=["CTF-Ladder"])}
+    return {**{f"Ladder Completion (CTF)" : LocData(3003,f"CTF {world.options.MapsPerCTF}",required_ladderItem=["CTF-Ladder"])}}
 
 def create_DOM_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (DOM)" : LocData(3004,f"DOM {world.options.MapsPerDOM}",required_ladderItem=["DOM-Ladder"])}
+    return {**{f"Ladder Completion (DOM)" : LocData(3004,f"DOM {world.options.MapsPerDOM}",required_ladderItem=["DOM-Ladder"])}}
 
 def create_EX_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (EX)" : LocData(3005,f"EX {world.options.MapsPerEX}",required_ladderItem=["EX-Ladder"])}
+    return {**{f"Ladder Completion (EX)" : LocData(3005,f"EX {world.options.MapsPerEX}",required_ladderItem=["EX-Ladder"])}}
 
 def create_EX2_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (EX2)" : LocData(3006,f"EX2 {world.options.MapsPerEX2}",required_ladderItem=["EX2-Ladder"])}
+    return {**{f"Ladder Completion (EX2)" : LocData(3006,f"EX2 {world.options.MapsPerEX2}",required_ladderItem=["EX-Ladder"])}}
 
 def create_EX3_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
-    return {f"Ladder Completion (EX3)" : LocData(3007,f"EX3 {world.options.MapsPerEX3}",required_ladderItem=["EX3-Ladder"])}
+    return {**{f"Ladder Completion (EX3)" : LocData(3007,f"EX3 {world.options.MapsPerEX3}",required_ladderItem=["EX-Ladder"])}}
 
-def create_Ladder_Completions(world: "UT99World"):
+def create_Ladder_Completions(world: "UT99World")->dict[str, LocData]:
     Ladder_Completions.update(create_AS_Ladder_Completion(world))
     Ladder_Completions.update(create_DM_Ladder_Completion(world))
     Ladder_Completions.update(create_CTF_Ladder_Completion(world))
@@ -45,6 +45,9 @@ def create_Ladder_Completions(world: "UT99World"):
         Ladder_Completions.update(create_EX_Ladder_Completion(world))
         Ladder_Completions.update(create_EX2_Ladder_Completion(world))
         Ladder_Completions.update(create_EX3_Ladder_Completion(world))
+    # for my own sanity this must work
+    outbounddict={**Ladder_Completions}
+    return outbounddict
 
 
 DM_maps={
