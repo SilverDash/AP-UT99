@@ -1,7 +1,7 @@
 import collections
 
 from BaseClasses import Region, Entrance, ItemClassification, Location, LocationProgressType
-from .Locations import location_table, Ladder_Completions,Map_locations
+from .Locations import location_table, Ladder_Completions, Map_locations, create_Ladder_Completions
 from typing import TYPE_CHECKING, List, Dict
 from .Options import MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 import random
@@ -154,13 +154,11 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
 
 
     # Attach ladder completion locations manually because sanity?
-    completion_tables = [Ladder_Completions]
-    if world.options.AddTDM:
-        completion_tables += Ladder_Completion_TDM
-    if world.options.ExtraLadders:
-        completion_tables += Ladder_Completions_EX
-    for table in completion_tables:
+    create_Ladder_Completions(world)
+    for table in Ladder_Completions:
         for loc_name, data in table.items():
+            if loc_name == "Ladder Completion (AS)":
+                print("Ladder Completion (AS)")
             for name, region in created_regions.items():
                 if data.region == region.name and region.name not in region.locations:
                     region.locations.append(

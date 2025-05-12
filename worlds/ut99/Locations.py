@@ -7,12 +7,7 @@ if TYPE_CHECKING:
     from . import UT99World
 
 
-Ladder_Completions={
-    "Ladder Completion (AS)":LocData(3000,"AS",required_ladderItem=["AS-Ladder"]),
-    "Ladder Completion (DM)":LocData(3001,"DM",required_ladderItem=["DM-Ladder"]),
-    "Ladder Completion (CTF)":LocData(3003,"CTF",required_ladderItem=["CTF-Ladder"]),
-    "Ladder Completion (DOM)":LocData(3004,"DOM",required_ladderItem=["DOM-Ladder"])
-}
+Ladder_Completions={}
 
 # Create the Ladder completion locations. The region is based on the final map set
 def create_AS_Ladder_Completion(world:"UT99World")->dict[str, LocData]:

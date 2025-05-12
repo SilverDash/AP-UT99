@@ -38,7 +38,7 @@ class UT99Web(WebWorld):
 
 class UT99World(World):
     """
-    Unreal Tournament is a FirstPerson Arena Shooter developed by epic games back in 1999.
+    Unreal Tournament is a FirstPerson Arena Shooter developed by Epic Mega Games back in 1999.
     Initially an expansion pack for Unreal 1998 it became its own game after some development time.
 
     You'll participate in a multitude of matches of game modes to win the tournament.
@@ -68,7 +68,7 @@ class UT99World(World):
         if not self.multiworld.get_player_name(self.player).isascii():
             raise OptionError("UT99 yaml's slot name has invalid character(s).")
         Regions.set_mapranges(self)
-        Locations.create_Ladder_Completions(self)
+
 
     def create_regions(self):
         Regions.create_all_regions_and_connections(self)
