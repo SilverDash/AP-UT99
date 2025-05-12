@@ -1,7 +1,7 @@
 import collections
 
 from BaseClasses import Region, Entrance, ItemClassification, Location, LocationProgressType
-from .Locations import location_table, Ladder_Completion_TDM, Ladder_Completions_EX, Ladder_Completions,Map_locations
+from .Locations import location_table, Ladder_Completions,Map_locations
 from typing import TYPE_CHECKING, List, Dict
 from .Options import MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
 import random
