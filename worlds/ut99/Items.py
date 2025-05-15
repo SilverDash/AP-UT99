@@ -16,6 +16,7 @@ ladder_items:Dict[str, ItemData] ={
     "Challange-Ladder":ItemData(6,ItemClassification.progression_skip_balancing)
 }
 
+
 victory_item={"Victory":ItemData(42069,ItemClassification.progression)}
 
 
@@ -37,13 +38,15 @@ item_table:Dict[str, ItemData]={
     "Trap": ItemData(500,ItemClassification.trap)
 }
 
+tdm_ladder_unlock:Dict[str,ItemData]={"TDM-Ladder":ItemData(3,ItemClassification.progression)}
 
 g_item_table = {
     **prog_items,
     **ladder_items,
     **ex_ladder_items,
     **item_table,
-    **victory_item
+    **victory_item,
+    **tdm_ladder_unlock
 }
 
 

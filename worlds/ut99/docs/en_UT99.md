@@ -1,5 +1,6 @@
 # Unreal Tournament
 
+
 ## Where is the options page?
 
 The [player options page for this game](../player-options) contains all the options you need to configure and export a
@@ -8,14 +9,14 @@ config file.
 ## What does randomization do to this game?
 
 Unreal Tournament is an arena shooter developed by Epic Mega Games in 1999.
-In the vanilla game you would be loading into maps and winning the game by reaching the goal
-scores for that map. Eventually fighting the champion XAN in a 1v1 on his personal ship.
+In the base game you would be loading into maps and winning the game by reaching the goal
+scores for that map. Eventually fighting the champion Xan in a 1-on-1 on his personal ship.
 
 For Archipelago this means you'll be winning matches and picking up randomly spawned items
 to gain checks on each map.
 
 Progressive unlocks can be enabled to make your game more interesting.
-Weapons, armor, Bot AI and even your ladder unlocks. 
+Weapons, Armor, Bot AI and even your ladder unlocks. 
 
 If traps are enabled, some randomized negative effects can affect your game when found.
 
@@ -23,7 +24,7 @@ If traps are enabled, some randomized negative effects can affect your game when
 ## What is the goal of Unreal Tournament?
 
 The vanilla goal of Unreal Tournament is to beat all the ladders fully to unlock the final set of challenges.
-4 maps the final being the 1 on 1 with Xan. Beat Xan to win the game.
+4 maps the final being the 1-on-1 with Xan. Beat Xan to win the game.
 
 ## What Unreal Tournament items can appear in other players' worlds?
 

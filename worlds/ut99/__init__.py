@@ -22,7 +22,6 @@ components.append(Component("Unreal Tournament Client", "UTClient", func=launch_
 icon_paths['UT99'] = local_path('data', 'UT99.png')
 
 
-
 class UT99Web(WebWorld):
     tutorials = [Tutorial(
         "MutliWorld Setup Guide",
@@ -84,6 +83,12 @@ class UT99World(World):
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Victory", self.player)
         self.multiworld.get_location("CHALLANGE Map 4 Completion",self.player).place_locked_item(
             create_item(self, "Victory"))
+        self.multiworld.get_location("CHALLANGE Map 3 Completion",self.player).place_locked_item(
+            create_item(self, "Challange-Ladder"))
+        self.multiworld.get_location("CHALLANGE Map 2 Completion",self.player).place_locked_item(
+            create_item(self, "Challange-Ladder"))
+        self.multiworld.get_location("CHALLANGE Map 1 Completion",self.player).place_locked_item(
+            create_item(self, "Challange-Ladder"))
         if not self.options.ShuffleLadderUnlocks:
             self.multiworld.get_location("Ladder Completion (DM)", self.player).place_locked_item(
                 create_item(self, "DOM-Ladder"))
@@ -93,6 +98,17 @@ class UT99World(World):
                 create_item(self, "AS-Ladder"))
             self.multiworld.get_location("Ladder Completion (AS)", self.player).place_locked_item(
                 create_item(self, "Challange-Ladder"))
+            if self.options.AddTDM:
+                self.multiworld.get_location("Ladder Completion (DM) - (TDM Unlock)", self.player).place_locked_item(
+                    create_item(self, "TDM-Ladder"))
+            if self.options.ExtraLadders:
+                self.multiworld.get_location("Ladder Completion (EX)", self.player).place_locked_item(
+                    create_item(self, "EX-Ladder"))
+                self.multiworld.get_location("Ladder Completion (EX2)", self.player).place_locked_item(
+                    create_item(self, "EX-Ladder"))
+                self.multiworld.get_location("Ladder Completion (EX3)", self.player).place_locked_item(
+                    create_item(self, "EX-Ladder"))
+
 
 
     def create_items(self):
@@ -100,6 +116,7 @@ class UT99World(World):
 
     def set_rules(self):
         Rules.set_rules(self)
+        Rules.make_plot(self)
 
     def create_item(self, name: str) -> Item:
         return Items.create_item(self, name)
@@ -110,4 +127,4 @@ class UT99World(World):
                                     "prog_Bots","RandomMapsPerLadder","VaryRandomMapNumber","ExtraLaddersNumber",
                                     "ShuffleLadderUnlocks","StartingLadder","LadderRandomizer","ExtraLadders",
                                     "RandomItemsPerMap","CustomMapRanges","MapsPerAS","MapsPerDM","MapsPerTDM",
-                                    "MapsPerDOM","MapsPerCTF","MapsPerEX","MapsPerEX2","MapsPerEX3")
+                                    "MapsPerDOM","MapsPerCTF","MapsPerEX","MapsPerEX2","MapsPerEX3","AddTDM")

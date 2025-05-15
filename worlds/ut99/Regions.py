@@ -18,9 +18,9 @@ if TYPE_CHECKING:
 UT_EX_region_Connections:Dict[str,List[str]] = {
     "EX":["EX 1"],
     "EX2":["EX2 1"],
-    "EX3":["EX3 1"],}
+    "EX3":["EX3 1"]}
 
-
+# this will only do anything if the options are set
 def set_mapranges(world: "UT99World"):
     """Initialize the random ranges the map count rando will use.
     Uses random.randrange and user options settings
@@ -141,7 +141,6 @@ def create_regions(world: "UT99World") -> Dict[str, Region]:
                     break
                 region.locations.append(UTLocation(world.player, key, data.id, region))
                 count+=1
-
 
 
     # Attach ladder completion locations manually because sanity?

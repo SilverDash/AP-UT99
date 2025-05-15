@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from . import UT99World
 
 
-Ladder_Completions={}
+Ladder_Completions:dict[str, LocData]={}
 
 # Create the Ladder completion locations. The region is based on the final map set
 def create_AS_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
@@ -34,6 +34,10 @@ def create_EX2_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
 def create_EX3_Ladder_Completion(world:"UT99World")->dict[str, LocData]:
     return {**{f"Ladder Completion (EX3)" : LocData(3007,f"EX3 {world.options.MapsPerEX3}",required_ladderItem=["EX-Ladder"])}}
 
+def create_TDM_Ladder_Unlock(world:"UT99World")->dict[str, LocData]:
+    return {**{f"Ladder Completion (DM) - (TDM Unlock)" : LocData(3011,f"DM {world.options.MapsPerDM}",required_ladderItem=["DM-Ladder"])}}
+
+
 def create_Ladder_Completions(world: "UT99World")->dict[str, LocData]:
     Ladder_Completions.update(create_AS_Ladder_Completion(world))
     Ladder_Completions.update(create_DM_Ladder_Completion(world))
@@ -41,6 +45,7 @@ def create_Ladder_Completions(world: "UT99World")->dict[str, LocData]:
     Ladder_Completions.update(create_DOM_Ladder_Completion(world))
     if world.options.AddTDM:
         Ladder_Completions.update(create_TDM_Ladder_Completion(world))
+        Ladder_Completions.update(create_TDM_Ladder_Unlock(world))
     if world.options.ExtraLadders:
         Ladder_Completions.update(create_EX_Ladder_Completion(world))
         Ladder_Completions.update(create_EX2_Ladder_Completion(world))
