@@ -1,13 +1,13 @@
 from BaseClasses import Item, ItemClassification
 from .Types import ItemData, UTItem
-from typing import List, Dict, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 
 if TYPE_CHECKING:
     from . import UT99World
 
 
-ladder_items:Dict[str, ItemData] ={
+ladder_items:dict[str, ItemData] ={
     "AS-Ladder":ItemData(1,ItemClassification.progression),
     "DM-Ladder":ItemData(2,ItemClassification.progression),
 
@@ -20,25 +20,25 @@ ladder_items:Dict[str, ItemData] ={
 victory_item={"Victory":ItemData(42069,ItemClassification.progression)}
 
 
-ex_ladder_items:Dict[str,ItemData]={
+ex_ladder_items:dict[str,ItemData]={
     "Extra-Ladder":ItemData(7,ItemClassification.progression)
 }
 
 
-prog_items:Dict[str, ItemData]={
+prog_items:dict[str, ItemData]={
     "Progressive-Weapons": ItemData(100, ItemClassification.useful),
     "Progressive-Armor": ItemData(200, ItemClassification.useful),
     "Progressive-BotUpgrade": ItemData(300, ItemClassification.useful),
 }
 
 
-item_table:Dict[str, ItemData]={
+item_table:dict[str, ItemData]={
     "Random-Goodie": ItemData(400,ItemClassification.filler),
     "Translocator": ItemData(150, ItemClassification.useful),
     "Trap": ItemData(500,ItemClassification.trap)
 }
 
-tdm_ladder_unlock:Dict[str,ItemData]={"TDM-Ladder":ItemData(3,ItemClassification.progression)}
+tdm_ladder_unlock:dict[str,ItemData]={"TDM-Ladder":ItemData(3,ItemClassification.progression)}
 
 g_item_table = {
     **prog_items,
@@ -59,7 +59,7 @@ def create_all_items(world: "UT99World") -> None:
     player = world.player
     ExCount = world.options.ExtraLaddersNumber.value
     locations_to_fill = len(world.multiworld.get_unfilled_locations(player))
-    itempool:List[str]=[]
+    itempool:list[str]=[]
 
     #itempool += item_table
 

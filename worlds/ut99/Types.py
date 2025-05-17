@@ -1,5 +1,5 @@
 from enum import IntEnum
-from typing import NamedTuple, Optional, List
+from typing import NamedTuple, Optional
 from BaseClasses import Location, Item, ItemClassification
 
 
@@ -25,11 +25,10 @@ class Difficulty(IntEnum):
 class LocData(NamedTuple):
     id: int = 0
     region: str = ""
-    required_ladderItem: List[str] = []
+    required_ladderItem: list[str] = []
     needs_previous_map: bool = True
     map_item_orderID: int = 0
-    misc_required: List[str] = []
-
+    misc_required: list[str] = []
 
 
 class ItemData(NamedTuple):

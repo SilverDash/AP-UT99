@@ -1,7 +1,5 @@
 from .Types import LocData
-from typing import Dict, TYPE_CHECKING
-from .Options import MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
-
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from . import UT99World
@@ -1183,13 +1181,13 @@ g_location_table = {
 }
 
 #"DM Map Item 1 (Map 1)" : LocData(100, "DM 1")
-def make_location_range(location_name: str, base_id: int, amt: int) -> Dict[str, int]:
+def make_location_range(location_name: str, base_id: int, amt: int) -> dict[str, int]:
     if amt == 1:
         return {location_name: base_id}
     return {f"{location_name} {i+1}": base_id + i for i in range(amt)}
 
 
-def get_loc_names() -> Dict[str,int]:
+def get_loc_names() -> dict[str,int]:
     names = {name: data.id for name, data in g_location_table.items()}
     return names
 

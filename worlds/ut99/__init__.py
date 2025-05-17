@@ -1,7 +1,6 @@
 from BaseClasses import Item, Tutorial, MultiWorld
 from Options import OptionError
 from worlds.AutoWorld import WebWorld, World
-from typing import Dict, Any
 from . import Items, Locations, Regions, Rules
 from .Items import g_item_table, create_item,victory_item
 from .Options import UTOptions, RandomItemsPerMap,ExtraLadders,CustomMapRanges,ExtraLaddersNumber,VaryRandomMapNumber,MapsPerAS,MapsPerCTF,MapsPerDM,MapsPerDOM,MapsPerEX,MapsPerEX2,MapsPerEX3,MapsPerTDM
@@ -24,12 +23,12 @@ icon_paths['UT99'] = local_path('data', 'UT99.png')
 
 class UT99Web(WebWorld):
     tutorials = [Tutorial(
-        "MutliWorld Setup Guide",
-        "A guide to setting up your UnrealTournament game for Archipelago MultiWorld games.",
-        "English",
-        "setup_en.md",
-        "setup/en",
-        ["SnowySilver"]
+        tutorial_name="MutliWorld Setup Guide",
+        description="A guide to setting up your UnrealTournament game for Archipelago MultiWorld games.",
+        language="English",
+        file_name="setup_en.md",
+        link="setup/en",
+        authors=["SnowySilver"]
     )]
     theme = "stone"
     bug_report_page = "https://github.com/SilverDash/AP-UT99/issues"
@@ -61,7 +60,6 @@ class UT99World(World):
     # and there was a better way. Thanks medic
     def __init__(self, multiworld: "MultiWorld", player: int):
         super().__init__(multiworld, player)
-
 
 
     def generate_early(self):
@@ -110,9 +108,11 @@ class UT99World(World):
                     create_item(self, "EX-Ladder"))
 
 
-
     def create_items(self):
         Items.create_all_items(self)
+
+    def get_filler_item_name(self) -> str:
+        return self.random.choice(["Random-Goodie", "Trap"])
 
     def set_rules(self):
         Rules.set_rules(self)
@@ -122,7 +122,7 @@ class UT99World(World):
         return Items.create_item(self, name)
 
     # Lots to send to the client
-    def fill_slot_data(self) -> Dict[str, Any]:
+    def fill_slot_data(self) -> dict[str, any]:
         return self.options.as_dict("death_link","EndGoal","prog_armor","prog_weapons",
                                     "prog_Bots","RandomMapsPerLadder","VaryRandomMapNumber","ExtraLaddersNumber",
                                     "ShuffleLadderUnlocks","StartingLadder","LadderRandomizer","ExtraLadders",

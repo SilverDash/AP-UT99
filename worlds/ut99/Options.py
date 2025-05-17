@@ -1,10 +1,10 @@
 from Options import Choice, Toggle, Range, PerGameCommonOptions, DeathLink, OptionGroup
 from dataclasses import dataclass
-from typing import List, Dict, Any
+from typing import Any
 
 
-def create_option_groups() -> List[OptionGroup]:
-    option_group_list: List[OptionGroup] = []
+def create_option_groups() -> list[OptionGroup]:
+    option_group_list: list[OptionGroup] = []
     for name, options in ut99_option_groups.items():
         option_group_list.append(OptionGroup(name=name, options=options))
     return option_group_list
@@ -238,16 +238,13 @@ class UTOptions(PerGameCommonOptions):
     MapsPerEX3:MapsPerEX3
     AddTDM:AddTDM
 
-
-
     death_link: DeathLink
 
 
-ut99_option_groups: Dict[str, List[Any]] = {
+ut99_option_groups: dict[str, list[Any]] = {
     "General Options":[EndGoal, ShuffleLadderUnlocks],
 
     "LadderOptions":[AddTDM, RandomMapsPerLadder,ExtraLadders,ExtraLaddersNumber,StartingLadder,LadderRandomizer],
     "Map Options": [MapsPerLadderRangeMax, CustomMapRanges,VaryRandomMapNumber,MapsPerAS,MapsPerDM,MapsPerDOM,MapsPerCTF,MapsPerTDM,MapsPerEX,MapsPerEX2,MapsPerEX3],
     "Item Options": [ProgressiveBotUpgrades,ProgressiveArmor,ProgressiveWeapons,RandomItemsPerMap]
-
 }
