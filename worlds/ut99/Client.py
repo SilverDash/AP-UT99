@@ -145,17 +145,10 @@ class UT99Context(CommonContext):
             if cmd != "PrintJSON":
                 self.server_msgs.append(encode([args]))
 
-    def run_gui(self):
-        from kvui import GameManager
-
-        class UT99Manager(GameManager):
-            logging_pairs = [
-                ("Client", "Archipelago")
-            ]
-            base_title = "Archipelago Unreal Tournament Client"
-
-        self.ui = UT99Manager(self)
-        self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
+    def make_gui(self):
+        ui = super().make_gui()
+        ui.base_title = "Archipelago Unreal Tournament Client"
+        return ui
 
 
 async def proxy(websocket, path: str = "/", ctx: UT99Context = None):
@@ -256,4 +249,5 @@ def launch():
         await ctx.exit_event.wait()
 
     Utils.init_logging("UT99Client")
+    asyncio.run(main())
 

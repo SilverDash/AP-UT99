@@ -15,7 +15,8 @@ def launch_client():
     from .Client import launch
     launch_component(launch, name="UTClient")
 
-components.append(Component("Unreal Tournament Client", "UTClient", func=launch_client,
+
+components.append(Component("Unreal Tournament Client", func=launch_client,
                             component_type=Type.CLIENT, icon='UT99'))
 
 icon_paths['UT99'] = local_path('data', 'UT99.png')
